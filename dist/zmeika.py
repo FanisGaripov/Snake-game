@@ -158,7 +158,7 @@ def show_settings():
     settings_screen.blit(text, text_rect)
 
     font = pygame.font.SysFont("comicsansms", 20)
-    text = font.render("Настройки кол-ва яблок", True, white)
+    text = font.render("Настройки кол-ва фруктов", True, white)
     text_rect = text.get_rect(center=(WIDTH // 1.4, HEIGHT // 2 + 50))
     settings_screen.blit(text, text_rect)
 
@@ -217,6 +217,12 @@ def show_settings():
     red_rect = pygame.Rect(red_x, red_y, red_width, red_height)
 
     pygame.draw.rect(screen, red, red_rect)
+    pygame.draw.rect(screen, white, (red_x, red_y + 20, 10, 10))
+    pygame.draw.rect(screen, white, (red_x, red_y, 10, 10))
+    pygame.draw.rect(screen, black, (red_x, red_y + 20, 5, 5))
+    pygame.draw.rect(screen, black, (red_x, red_y, 5, 5))
+    pygame.draw.rect(screen, black, (red_x + 25, red_y + 5, 3, 3))
+    pygame.draw.rect(screen, black, (red_x + 25, red_y + 23, 3, 3))
 
     blue_width = 30
     blue_height = 30
@@ -225,6 +231,12 @@ def show_settings():
     blue_rect = pygame.Rect(blue_x, blue_y, blue_width, blue_height)
 
     pygame.draw.rect(screen, blue, blue_rect)
+    pygame.draw.rect(screen, white, (blue_x, blue_y + 20, 10, 10))
+    pygame.draw.rect(screen, white, (blue_x, blue_y, 10, 10))
+    pygame.draw.rect(screen, black, (blue_x, blue_y + 20, 5, 5))
+    pygame.draw.rect(screen, black, (blue_x, blue_y, 5, 5))
+    pygame.draw.rect(screen, black, (blue_x + 25, blue_y + 5, 3, 3))
+    pygame.draw.rect(screen, black, (blue_x + 25, blue_y + 23, 3, 3))
 
     green_width = 30
     green_height = 30
@@ -234,6 +246,12 @@ def show_settings():
 
     pygame.draw.rect(screen, green, green_rect)
     pygame.draw.rect(screen, white, green_rect, 1)
+    pygame.draw.rect(screen, white, (green_x, green_y + 20, 10, 10))
+    pygame.draw.rect(screen, white, (green_x, green_y, 10, 10))
+    pygame.draw.rect(screen, black, (green_x, green_y + 20, 5, 5))
+    pygame.draw.rect(screen, black, (green_x, green_y, 5, 5))
+    pygame.draw.rect(screen, black, (green_x + 25, green_y + 5, 3, 3))
+    pygame.draw.rect(screen, black, (green_x + 25, green_y + 23, 3, 3))
 
     yellow_width = 30
     yellow_height = 30
@@ -242,6 +260,12 @@ def show_settings():
     yellow_rect = pygame.Rect(yellow_x, yellow_y, yellow_width, yellow_height)
 
     pygame.draw.rect(screen, yellow, yellow_rect)
+    pygame.draw.rect(screen, white, (yellow_x, yellow_y + 20, 10, 10))
+    pygame.draw.rect(screen, white, (yellow_x, yellow_y, 10, 10))
+    pygame.draw.rect(screen, black, (yellow_x, yellow_y + 20, 5, 5))
+    pygame.draw.rect(screen, black, (yellow_x, yellow_y, 5, 5))
+    pygame.draw.rect(screen, black, (yellow_x + 25, yellow_y + 5, 3, 3))
+    pygame.draw.rect(screen, black, (yellow_x + 25, yellow_y + 23, 3, 3))
 
     yabloki_width = 50
     yabloki_height = 50
@@ -476,7 +500,7 @@ class OurSnake(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((snake_block, snake_block))
-        global cvetzmeiki
+        global cvetzmeiki, direction
         if cvetzmeiki is None:
             cvetzmeiki = green
         self.image.fill(cvetzmeiki)
@@ -492,8 +516,44 @@ class OurSnake(pygame.sprite.Sprite):
         self.rect.y = round(self.rect.y / snake_block) * snake_block
 
     def tail(self, snake_block, snake_list):
-        for x in snake_list:
+        for l, x in enumerate(snake_list):
             pygame.draw.rect(screen, cvetzmeiki, [x[0], x[1], snake_block, snake_block])
+            if l == len(snake_list) - 1:
+                if self.speedx > 0:
+                    pygame.draw.rect(screen, white, (x[0], x[1] + 20, 10, 10))
+                    pygame.draw.rect(screen, white, (x[0], x[1], 10, 10))
+                    pygame.draw.rect(screen, black, (x[0], x[1] + 20, 5, 5))
+                    pygame.draw.rect(screen, black, (x[0], x[1], 5, 5))
+                    pygame.draw.rect(screen, black, (x[0] + 25, x[1] + 5, 3, 3))
+                    pygame.draw.rect(screen, black, (x[0] + 25, x[1] + 23, 3, 3))
+                elif self.speedx < 0:
+                    pygame.draw.rect(screen, white, (x[0] + 20, x[1] + 20, 10, 10))
+                    pygame.draw.rect(screen, white, (x[0] + 20, x[1], 10, 10))
+                    pygame.draw.rect(screen, black, (x[0] + 20, x[1] + 20, 5, 5))
+                    pygame.draw.rect(screen, black, (x[0] + 20, x[1], 5, 5))
+                    pygame.draw.rect(screen, black, (x[0] + 3, x[1] + 5, 3, 3))
+                    pygame.draw.rect(screen, black, (x[0] + 3, x[1] + 23, 3, 3))
+                elif self.speedy > 0:
+                    pygame.draw.rect(screen, white, (x[0], x[1], 10, 10))
+                    pygame.draw.rect(screen, white, (x[0] + 21, x[1], 10, 10))
+                    pygame.draw.rect(screen, black, (x[0], x[1], 5, 5))
+                    pygame.draw.rect(screen, black, (x[0] + 21, x[1], 5, 5))
+                    pygame.draw.rect(screen, black, (x[0] + 4, x[1] + 23, 3, 3))
+                    pygame.draw.rect(screen, black, (x[0] + 24, x[1] + 23, 3, 3))
+                elif self.speedy < 0:
+                    pygame.draw.rect(screen, white, (x[0] + 20, x[1] + 21, 10, 10))
+                    pygame.draw.rect(screen, white, (x[0], x[1] + 20, 10, 10))
+                    pygame.draw.rect(screen, black, (x[0] + 20, x[1] + 21, 5, 5))
+                    pygame.draw.rect(screen, black, (x[0], x[1] + 20, 5, 5))
+                    pygame.draw.rect(screen, black, (x[0] + 4, x[1] + 5, 3, 3))
+                    pygame.draw.rect(screen, black, (x[0] + 24, x[1] + 5, 3, 3))
+                else:
+                    pygame.draw.rect(screen, white, (x[0], x[1] + 20, 10, 10))
+                    pygame.draw.rect(screen, white, (x[0], x[1], 10, 10))
+                    pygame.draw.rect(screen, black, (x[0], x[1] + 20, 5, 5))
+                    pygame.draw.rect(screen, black, (x[0], x[1], 5, 5))
+                    pygame.draw.rect(screen, black, (x[0] + 25, x[1] + 5, 3, 3))
+                    pygame.draw.rect(screen, black, (x[0] + 25, x[1] + 23, 3, 3))
 
 
 class Apple(pygame.sprite.Sprite):
@@ -710,6 +770,13 @@ def gameLoop():
             if x == apple:
                 apple.foodx = round(random.randrange(32, WIDTH - 2 * snake_block) / 32.0) * 32.0
                 apple.foody = round(random.randrange(32, HEIGHT - 2 * snake_block) / 32.0) * 32.0
+
+        for tail in snake_list:
+            if apple.rect.x == tail[0] and apple.rect.y == tail[1]:
+                # Генерируем новые координаты для яблока
+                apple.foodx = round(random.randrange(32, WIDTH - 2 * snake_block) / 32.0) * 32.0
+                apple.foody = round(random.randrange(32, HEIGHT - 2 * snake_block) / 32.0) * 32.0
+                break
         snake.tail(snake_block, snake_list)
         Your_score(dlinazmei - 1)
         pygame.display.update()
@@ -750,8 +817,11 @@ def gameLoop():
             apple.foody = round(random.randrange(32, HEIGHT - 2 * snake_block) / 32.0) * 32.0
 
         if pygame.sprite.spritecollideany(apple, player_group):
-            apple.foodx = round(random.randrange(32, WIDTH - 2 * snake_block) / 32.0) * 32.0
-            apple.foody = round(random.randrange(32, WIDTH - 2 * snake_block) / 32.0) * 32.0
+            while True:
+                apple.foodx = round(random.randrange(32, WIDTH - 2 * snake_block) / 32.0) * 32.0
+                apple.foody = round(random.randrange(32, HEIGHT - 2 * snake_block) / 32.0) * 32.0
+                if not pygame.sprite.spritecollideany(apple, snake_list):
+                    break
 
 
         for apple in apples:
@@ -966,8 +1036,6 @@ def menu_proigrisha():
                     game_close = False
                     snake.rect.center = [WIDTH // 2 - (snake_block // 2), HEIGHT // 2 - (snake_block // 2)]
                     dlinazmei = 1
-                    fonovaya.stop()
-                    fonovaya2.stop()
                     player_group.empty()
                     gameLoop()
                 if button2_rect.collidepoint(event.pos):
@@ -996,8 +1064,6 @@ def menu_proigrisha():
                     proigral = False
                     snake.rect.center = [WIDTH // 2 - (snake_block // 2), HEIGHT // 2 - (snake_block // 2)]
                     dlinazmei = 1
-                    fonovaya.stop()
-                    fonovaya2.stop()
                     player_group.empty()
                     gameLoop()
                 if event.key == pygame.K_q:
